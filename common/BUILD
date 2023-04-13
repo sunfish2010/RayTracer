@@ -18,3 +18,22 @@ cc_library(
     hdrs = ["color.hh"],
     deps = [":vec3"],
 )
+
+cc_library(
+    name = "object",
+    srcs = ["object.cc"],
+    hdrs = ["object.hh"],
+    deps = [":ray"],
+)
+
+cc_library(
+    name = "sphere",
+    srcs = ["sphere.cc"],
+    hdrs = ["sphere.hh"],
+    deps = [":object"],
+)
+
+cc_library(
+    name = "constants",
+    hdrs = ["constants.hh"],
+)

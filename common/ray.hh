@@ -3,22 +3,22 @@
 
 #include "common/vec3.hh"
 
-class ray {
+class Ray {
    public:
-    ray() {}
-    ray(const point3& origin, const vec3& direction)
+    Ray() {}
+    Ray(const Point3& origin, const Vec3& direction)
         : orig(origin), dir(direction) {}
 
-    point3 origin() const { return orig; }
-    vec3 direction() const { return dir; }
+    Point3 origin() const { return orig; }
+    Vec3 direction() const { return dir; }
 
-    point3 at(double t) const {
+    Point3 at(double t) const {
         return orig + t * dir;
     }
 
-   public:
-    point3 orig;
-    vec3 dir;
+   private:
+    Point3 orig;
+    Vec3 dir;
 };
 
 #endif

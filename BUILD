@@ -6,5 +6,7 @@ cc_binary(
     deps = [
         "//common:ray",
         "//common:color",
+        "//common:constants",
+        "//common:sphere",
     ],
 )

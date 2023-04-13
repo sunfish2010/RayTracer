@@ -1,5 +1,5 @@
 # RayTracer
-Mini Ray tracer from ray tracing in one weekend.
+Mini Ray tracer from [ray tracing in one weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html).
 
 The project is built with bazel.
 

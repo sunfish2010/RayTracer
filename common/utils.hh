@@ -11,7 +11,7 @@ inline double degrees_to_radians(double degrees) {
 
 template <typename T>
 T random_number(T min, T max) {
-    // Initializing random distribution generator each call is expensive.
+    // Initializing random distribution generator each call is expensive. ~10x difference
     static std::random_device rd;
     static std::mt19937 gen(rd());
     static std::uniform_real_distribution<T> distribution(min, max);

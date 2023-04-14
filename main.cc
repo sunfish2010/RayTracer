@@ -51,6 +51,7 @@ int main() {
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
         for (int i = 0; i < image_width; ++i) {
             Color pixel_color(0, 0, 0);
+            // Costly way of anti-aliasing.
             for (int s = 0; s < samples_per_pixel; ++s) {
                 auto u = (i + random_number<double>(0., 1.)) / (image_width - 1);
                 auto v = (j + random_number<double>(0., 1.)) / (image_height - 1);

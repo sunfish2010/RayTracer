@@ -8,5 +8,8 @@ cc_binary(
         "//common:color",
         "//common:constants",
         "//common:sphere",
+        "//common:camera",
+        "//common:utils",
+        "//common:thread_pool",
     ],
 )

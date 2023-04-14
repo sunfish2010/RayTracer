@@ -25,18 +25,18 @@ class Object {
 
 class HittableObjectLists : Object {
    public:
-    explicit HittableObjectLists(const std::shared_ptr<Object> object) : objects{object} {}
+    explicit HittableObjectLists(const std::shared_ptr<Object> object) : objects_{object} {}
 
     HittableObjectLists() = default;
 
-    void clear() { objects.clear(); }
+    void clear() { objects_.clear(); }
 
-    void add(const std::shared_ptr<Object> object) { objects.push_back(object); }
+    void add(const std::shared_ptr<Object> object) { objects_.push_back(object); }
 
     virtual bool hit(const Ray& r, double t_min, double t_max, HitRecord& rec) const override;
 
    private:
-    std::vector<std::shared_ptr<Object>> objects;
+    std::vector<std::shared_ptr<Object>> objects_;
 };
 
 #endif

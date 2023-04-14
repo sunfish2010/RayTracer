@@ -8,10 +8,22 @@ cc_library(
 )
 
 cc_library(
+    name = "constants",
+    hdrs = ["constants.hh"],
+)
+
+cc_library(
     name = "ray",
     hdrs = ["ray.hh"],
     deps = [":vec3"],
 )
+
+cc_library(
+    name = "utils",
+    hdrs = ["utils.hh"],
+    deps = [":constants"],
+)
+
 
 cc_library(
     name = "color",
@@ -33,7 +45,18 @@ cc_library(
     deps = [":object"],
 )
 
+
 cc_library(
-    name = "constants",
-    hdrs = ["constants.hh"],
+    name = "camera",
+    hdrs = ["camera.hh"],
+    deps = [
+        ":constants", 
+        ":ray", 
+    ],
+)
+
+
+cc_library(
+    name = "thread_pool",
+    hdrs = ["thread_pool.hh"]
 )

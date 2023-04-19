@@ -1,8 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "canvas/ray.hh"
 #include "common/constants.hh"
-#include "common/ray.hh"
 
 class Camera {
    public:

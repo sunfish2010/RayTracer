@@ -1,4 +1,6 @@
-#include "common/sphere.hh"
+#include "canvas/sphere.hh"
+
+#include <memory>
 
 bool Sphere::hit(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     Vec3 oc = r.origin() - center_;
@@ -24,6 +26,7 @@ bool Sphere::hit(const Ray& r, double t_min, double t_max, HitRecord& rec) const
     rec.p = r.at(rec.t);
     const auto outward_normal = (rec.p - center_) / radius_;
     rec.set_face_normal(r, outward_normal);
+    rec.hit_object = shared_from_this();
 
     return true;
 }

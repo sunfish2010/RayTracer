@@ -4,13 +4,21 @@
 #include <memory>
 #include <vector>
 
-#include "common/ray.hh"
+#include "canvas/ray.hh"
+
+enum Material {
+    DIFFUSIVE = 0,
+    METAL = 1
+};
+
+class Object;
 
 struct HitRecord {
     Point3 p;
     Vec3 normal;
     double t;
     bool front_face;
+    std::shared_ptr<const Object> hit_object;
 
     inline void set_face_normal(const Ray& r, const Vec3& outward_normal) {
         front_face = dot(r.direction(), outward_normal) < 0;
@@ -18,9 +26,30 @@ struct HitRecord {
     }
 };
 
+struct Texture {
+    Material material;
+    Color albedo;
+};
+
 class Object {
    public:
+    Object() = default;
+
+    explicit Object(const Texture& texture) : texture_(texture) {}
+
+    void set_texture(const Texture& texture) {
+        texture_ = texture;
+    }
+
+    Color albedo() const { return texture_.albedo; }
+
+    bool scatter(
+        const Ray& r_in, const HitRecord& rec, Ray& scattered) const;
+
     virtual bool hit(const Ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
+
+   private:
+    Texture texture_;
 };
 
 class HittableObjectLists : Object {

@@ -53,7 +53,7 @@ inline ThreadPool::ThreadPool(size_t num_threads)
             });
 }
 
-// add new work item to the pool
+// Add new work item to the pool
 template <class F, class... Args>
 auto ThreadPool::enqueue(F&& f, Args&&... args)
     -> std::future<typename std::result_of<F(Args...)>::type> {
@@ -66,7 +66,7 @@ auto ThreadPool::enqueue(F&& f, Args&&... args)
     {
         std::unique_lock<std::mutex> lock(queue_mutex);
 
-        // don't allow enqueueing after stopping the pool
+        // Don't allow enqueueing after stopping the pool
         if (stop) {
             throw std::runtime_error("enqueue on stopped ThreadPool");
         }
@@ -77,7 +77,7 @@ auto ThreadPool::enqueue(F&& f, Args&&... args)
     return res;
 }
 
-// the destructor joins all threads
+// The destructor joins all threads
 inline ThreadPool::~ThreadPool() {
     {
         std::unique_lock<std::mutex> lock(queue_mutex);

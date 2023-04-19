@@ -4,12 +4,10 @@ cc_binary(
     name = "ray_tracer",
     srcs = ["main.cc"],
     deps = [
-        "//common:ray",
-        "//common:color",
+        "//canvas:ray",
+        "//canvas:color",
         "//common:constants",
-        "//common:sphere",
-        "//common:camera",
-        "//common:utils",
-        "//common:thread_pool",
+        "//canvas:sphere",
+        "//canvas:camera",
     ],
 )

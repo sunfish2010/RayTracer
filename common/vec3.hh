@@ -4,6 +4,8 @@
 #include <cmath>
 #include <iostream>
 
+#include "common/utils.hh"
+
 using std::sqrt;
 
 class Vec3 {
@@ -43,6 +45,16 @@ class Vec3 {
 
     double length_squared() const {
         return e[0] * e[0] + e[1] * e[1] + e[2] * e[2];
+    }
+
+    inline static Vec3 random(double min, double max) {
+        return Vec3(random_number<double>(min, max), random_number<double>(min, max), random_number<double>(min, max));
+    }
+
+    inline bool near_zero() const {
+        // Return true if the vector is close to zero in all dimensions.
+        const auto s = 1e-8;
+        return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
     }
 
    public:
@@ -91,7 +103,21 @@ inline Vec3 unit_vector(Vec3 v) {
     return v / v.length();
 }
 
+inline Vec3 random_in_unit_sphere() {
+    while (true) {
+        auto p = Vec3::random(-1, 1);
+        if (p.length_squared() < 1) {
+            return p;
+        }
+    }
+}
+
+inline Vec3 reflect(const Vec3 &v, const Vec3 &n) {
+    return v - 2 * dot(v, n) * n;
+}
+
 // Type aliases for Vec3
 using Point3 = Vec3;  // 3D point
+using Color = Vec3;   // RGB color
 
 #endif

@@ -8,7 +8,8 @@
 
 enum Material {
     DIFFUSIVE = 0,
-    METAL = 1
+    METAL = 1,
+    DIELECTRIC = 2
 };
 
 class Object;
@@ -27,8 +28,19 @@ struct HitRecord {
 };
 
 struct Texture {
-    Material material;
-    Color albedo;
+    Material material = Material::DIFFUSIVE;
+    Color albedo = Color(1.0, 1.0, 1.0);
+    double fuzz = 1;
+    double refraction = 1;
+
+    Texture() = default;
+
+    Texture(const Material& m, const Color& a, const double f = 1., const double r = 1.) {
+        material = m;
+        albedo = a;
+        fuzz = clamp(f, 0., 1.);
+        refraction = r;
+    }
 };
 
 class Object {

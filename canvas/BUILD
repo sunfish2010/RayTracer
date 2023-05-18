@@ -20,6 +20,7 @@ cc_library(
     hdrs = ["object.hh"],
     deps = [
         ":ray", 
+        ":bbox",
     ],
 )
 
@@ -38,5 +39,13 @@ cc_library(
         "//common:constants", 
         ":ray", 
     ],
+)
+
+cc_library(
+    name = "bbox",
+    hdrs = ["bbox.hh"],
+    deps = [
+        ":ray",
+    ]
 )
 

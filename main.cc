@@ -50,13 +50,17 @@ HittableObjectLists generate_random_scene() {
             Point3 center(i + 0.9 * random_number<double>(0, 1), 0.2, j + 0.9 * random_number<double>(0, 1));
             if ((center - focus).length() > 0.9) {
                 if (choose_material < 0.8) {
+                    // Diffiuse.
                     Color albedo(random_number<double>(0, 0.5), random_number<double>(0, 0.5), random_number<double>(0, 0.5));
-                    world.add(std::make_shared<Sphere>(center, 0.2, Texture(Material::DIFFUSIVE, albedo)));
+                    const auto center2 = center + Vec3(0, random_number<double>(0, 0.5), 0);
+                    world.add(std::make_shared<MovingSphere>(center, center2, 0, 1, 0.2, Texture(Material::DIFFUSIVE, albedo)));
                 } else if (choose_material < 0.95) {
+                    // Metal.
                     Color albedo(random_number<double>(0.5, 1), random_number<double>(0.5, 1), random_number<double>(0.5, 1));
                     const double fuzz = random_number<double>(0, 0.5);
                     world.add(std::make_shared<Sphere>(center, 0.2, Texture(Material::METAL, albedo, fuzz)));
                 } else {
+                    // Glass.
                     world.add(std::make_shared<Sphere>(center, 0.2, Texture(Material::DIELECTRIC, Color(1, 1, 1), 1, 1.5)));
                 }
             }
@@ -82,7 +86,7 @@ int main() {
     // Camera
     Vec3 camera_center(13, 2, 3);
     Vec3 world_center(0, 0, 0);
-    Camera cam(camera_center, world_center, Vec3(0, 1, 0), 20, 0.1, 10., ASPECT_RATIO);
+    Camera cam(camera_center, world_center, Vec3(0, 1, 0), 20, 0.1, 10., ASPECT_RATIO, 0, 1);
 
     const auto world = generate_random_scene();
 

@@ -35,19 +35,19 @@ bool Object::scatter(
             if (scatter_direction.near_zero()) {
                 scatter_direction = rec.normal;
             }
-            scattered = Ray(rec.p, scatter_direction);
+            scattered = Ray(rec.p, scatter_direction, r_in.time());
             break;
         }
         case Material::METAL: {
             auto reflected = reflect(unit_vector(r_in.direction()), rec.normal);
-            scattered = Ray(rec.p, reflected + texture_.fuzz * random_in_unit_sphere());
+            scattered = Ray(rec.p, reflected + texture_.fuzz * random_in_unit_sphere(), r_in.time());
             return (dot(scattered.direction(), rec.normal) > 0);
         }
         case Material::DIELECTRIC: {
             double refraction_ratio = rec.front_face ? (1.0 / texture_.refraction) : texture_.refraction;
             Vec3 unit_direction = unit_vector(r_in.direction());
             Vec3 refracted = refract(unit_direction, rec.normal, refraction_ratio);
-            scattered = Ray(rec.p, refracted);
+            scattered = Ray(rec.p, refracted, r_in.time());
             break;
         }
         default:
@@ -70,4 +70,21 @@ bool HittableObjectLists::hit(const Ray& r, double t_min, double t_max, HitRecor
     }
 
     return hit_anything;
+}
+
+bool HittableObjectLists::maybe_get_bbox(double time0, double time1, Bbox& output_box) const {
+    if (objects_.empty()) {
+        return false;
+    }
+    Bbox temp_box;
+    bool first_box = true;
+
+    for (const auto& object : objects_) {
+        if (!object->maybe_get_bbox(time0, time1, temp_box)) {
+            return false;
+        }
+        output_box = first_box ? temp_box : surrounding_box(output_box, temp_box);
+        first_box = false;
+    }
+    return true;
 }

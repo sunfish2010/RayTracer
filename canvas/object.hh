@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include "canvas/bbox.hh"
 #include "canvas/ray.hh"
 
 enum Material {
@@ -58,7 +59,10 @@ class Object {
     bool scatter(
         const Ray& r_in, const HitRecord& rec, Ray& scattered) const;
 
+    // Return if the ray hits the object in distance range t_min to t_max.
     virtual bool hit(const Ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
+
+    virtual bool maybe_get_bbox(double time0, double time1, Bbox& output_box) const = 0;
 
    private:
     Texture texture_;
@@ -74,7 +78,11 @@ class HittableObjectLists : Object {
 
     void add(const std::shared_ptr<Object> object) { objects_.push_back(object); }
 
+    // Return if the ray hits any object in the list.
     virtual bool hit(const Ray& r, double t_min, double t_max, HitRecord& rec) const override;
+
+    // Return the bbox containing all objects in the list.
+    virtual bool maybe_get_bbox(double time0, double time1, Bbox& output_box) const override;
 
    private:
     std::vector<std::shared_ptr<Object>> objects_;

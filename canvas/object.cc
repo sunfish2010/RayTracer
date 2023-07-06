@@ -88,3 +88,12 @@ bool HittableObjectLists::maybe_get_bbox(double time0, double time1, Bbox& outpu
     }
     return true;
 }
+
+bool box_compare(const std::shared_ptr<Object>& a, const std::shared_ptr<Object>& b, int axis) {
+    Bbox box_a, box_b;
+
+    if (!a->maybe_get_bbox(0, 0, box_a) || !(b->maybe_get_bbox(0, 0, box_b))) {
+        std::cerr << "No bounding box in bounding volume hierachies. \n";
+    }
+    return box_a.lower_left()[axis] < box_b.lower_left()[axis];
+}

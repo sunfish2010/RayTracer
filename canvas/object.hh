@@ -84,8 +84,12 @@ class HittableObjectLists : Object {
     // Return the bbox containing all objects in the list.
     virtual bool maybe_get_bbox(double time0, double time1, Bbox& output_box) const override;
 
+    std::vector<std::shared_ptr<Object>> objects() const { return objects_; };
+
    private:
     std::vector<std::shared_ptr<Object>> objects_;
 };
+
+bool box_compare(const std::shared_ptr<Object>& a, const std::shared_ptr<Object>& b, int axis);
 
 #endif

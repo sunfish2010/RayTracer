@@ -49,3 +49,12 @@ cc_library(
     ]
 )
 
+cc_library(
+    name = "bvh",
+    srcs = ["bvh.cc"],
+    hdrs = ["bvh.hh"],
+    deps = [
+        ":object",
+    ]
+)
+
